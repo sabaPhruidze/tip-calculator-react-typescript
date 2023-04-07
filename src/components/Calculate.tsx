@@ -1,32 +1,22 @@
 import styles from "../components/calculate.module.css"
-import { useState,useEffect } from "react"
+import { useState, useEffect, useRef } from "react";
 
-export default function Calculate(props:any) {
-    type billInput =number
-    const [cBill,sBill] = useState<billInput>(0) //c means current. s means set.
-    const [cTip,sTip] = useState<billInput>(0)
-    const [cSumOfBAT,sSumOfBAT] = useState<billInput>(0) //current sum of bill and tip
-    const {cPeopleNumber,sPeopleNumber} = props
-    const [cTPP,sTPP] = useState<number>(0)  // current total per person, set total per person
-    useEffect(() => {
-        //by this we know what is the sum of bill and tip
-        sSumOfBAT(() => {
-            return (
-                (cBill * cTip / 100) + cBill
-            )
-           
-        })
-        
-    },[cBill,cTip])
-    useEffect(() => {
-        sTPP(() => {
-            return (
-                cSumOfBAT / cPeopleNumber
-            )
-        })
-    },[cBill,cTip,cPeopleNumber])
-
-
+ export default function Calculate(props: any) { 
+    type billInput = number;
+     const [cBill, sBill] = useState(0); 
+     const [cTip, sTip] = useState(0); 
+     const [cSumOfBAT, sSumOfBAT] = useState(0); 
+     const { cPeopleNumber, sPeopleNumber } = props; 
+     const [cTPP, sTPP] = useState(0); // current total per person, set total per person 
+     const prevBill = useRef(cBill); // I used the use ref so it will update the cBill instanly after every change
+     const prevTip = useRef(cTip); // I used the use ref so it will update the cBill instanly after every change
+     useEffect(() => { 
+        // by this we know what is the sum of bill and tip 
+        if (cBill !== prevBill.current || cTip !== prevTip.current) { 
+            sSumOfBAT(cBill * (1 + cTip / 100)); prevBill.current = cBill; 
+            prevTip.current = cTip; } }, [cBill, cTip]); 
+            useEffect(() => { sTPP(() => { return (cSumOfBAT / cPeopleNumber); }); 
+        }, [cSumOfBAT, cPeopleNumber]);
   return (
     <div className={styles.container}>
         <div className={styles.billTotal}>
@@ -65,7 +55,8 @@ export default function Calculate(props:any) {
             </div>
             <div className={styles.totalPerPerson}>
                 <h4>Total per Person</h4>
-                <h2>$ {cTPP}</h2>
+                <h2>$ {typeof cTPP === "number" && cTPP!== 0 ? cTPP.toFixed(2) : "0.00"}</h2> 
+                {/* using toFixed total per person have  only two number after dot . */}
                 {/* {typeof cTPP === 'number' || cTPP !== 0  ? cTPP : "0.00"} */}
             </div>
         </div>
