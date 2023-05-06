@@ -5,7 +5,7 @@
 .container {
     width:400px;
     height:600px;
-    background-color: #272639;
+    background-color: #388fba;
     border-radius: 20px;
     padding:100px 20px;
   }
@@ -24,9 +24,9 @@ input {
     border-radius: 10px;
     font-family: opensanss;
     font-size: 18px;
-    background: #353959;
+    background: #4fa4c3;
     border: 0;
-    color:white
+    color:rgba(3, 1, 6, 0.732);
 }
 input:focus {
     outline: 0;
@@ -61,7 +61,7 @@ input:focus {
 .btn {
     width:25px;
     height:25px;
-    background-color: #8990ec;
+    background-color: #83c9d3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,7 +71,7 @@ input:focus {
 .AbsoluteBill, .AbsoluteTip {
     position: absolute;
     top:35px;
-    color:rgb(255, 255, 255);
+    color:rgba(3, 1, 6, 0.732);
     left:10px;
     font-size: 25px;
 }
